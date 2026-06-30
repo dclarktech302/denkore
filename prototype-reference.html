@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Denkore Group — Tech That's Not Confusing</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #050505; color: #fff; overflow-x: hidden; }
+
+/* Fixed particle canvas — stays behind everything as user scrolls */
+#particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; }
+
+/* Nebula glow blobs, fixed behind content */
+.nebula { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; filter: blur(10px); }
+.blob-1 { top: -15%; left: -10%; width: 600px; height: 500px; opacity: 0.22; background: radial-gradient(ellipse, #7c3aed, transparent 70%); animation: drift1 14s ease-in-out infinite; }
+.blob-2 { bottom: -10%; right: -5%; width: 500px; height: 460px; opacity: 0.16; background: radial-gradient(ellipse, #0ea5e9, transparent 70%); animation: drift2 17s ease-in-out infinite; }
+@keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,30px) scale(1.1); } }
+@keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px,-40px) scale(1.08); } }
+
+main { position: relative; z-index: 1; }
+
+/* HERO */
+.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
+.eyebrow { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: #a78bfa; margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.1s; }
+.hero h1 { font-size: clamp(36px, 7vw, 76px); font-weight: 300; letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.3s; }
+.hero h1 .accent { background: linear-gradient(90deg, #a78bfa, #60a5fa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero p { font-size: clamp(15px, 2vw, 18px); color: rgba(255,255,255,0.55); max-width: 520px; line-height: 1.6; margin-bottom: 40px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.5s; }
+.hero-cta { display: flex; gap: 16px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.7s; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+.btn-primary { padding: 13px 28px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; border-radius: 8px; background: #7c3aed; color: #fff; border: none; box-shadow: 0 0 24px rgba(124,58,237,0.45), 0 0 60px rgba(124,58,237,0.15); cursor: pointer; transition: box-shadow 0.25s ease, transform 0.15s ease; }
+.btn-primary:hover { box-shadow: 0 0 32px rgba(124,58,237,0.65), 0 0 80px rgba(124,58,237,0.25); transform: translateY(-1px); }
+
+.btn-ghost { padding: 13px 28px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; border-radius: 8px; background: transparent; color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.18); cursor: pointer; transition: border-color 0.2s ease, color 0.2s ease; }
+.btn-ghost:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+
+.scroll-hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0; animation: fadeUp 0.8s ease forwards 1s; }
+.scroll-hint span { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+.scroll-line { width: 1px; height: 28px; background: rgba(255,255,255,0.3); animation: pulseLine 1.8s ease-in-out infinite; }
+@keyframes pulseLine { 0%,100% { transform: scaleY(1); opacity: 0.4; } 50% { transform: scaleY(0.6); opacity: 1; } }
+
+/* CARD-FLIP SCROLL SECTIONS */
+.card-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 24px; }
+.flip-card { width: 100%; max-width: 680px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 56px 48px; backdrop-filter: blur(8px); transform: perspective(1200px) rotateX(12deg) translateY(60px); opacity: 0; transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease; }
+.flip-card.in-view { transform: perspective(1200px) rotateX(0deg) translateY(0); opacity: 1; }
+.flip-card .tag { display: inline-block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #a78bfa; border: 1px solid rgba(167,139,250,0.35); padding: 5px 12px; border-radius: 100px; margin-bottom: 20px; }
+.flip-card h2 { font-size: clamp(24px, 4vw, 36px); font-weight: 400; margin-bottom: 16px; letter-spacing: -0.01em; }
+.flip-card p { font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.6); max-width: 520px; }
+.flip-card.neon { border-color: rgba(255,0,128,0.18); }
+.flip-card.neon .tag { color: #ff5fa8; border-color: rgba(255,0,128,0.3); }
+
+footer { position: relative; z-index: 1; text-align: center; padding: 60px 24px 40px; font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="nebula"> <div class="blob blob-1"></div> <div class="blob blob-2"></div> </div>
+<main>
+<section class="hero">
+<div class="eyebrow">Denkore Group LLC — Eastern Shore</div>
+<h1>Tech that's <span class="accent">not confusing.</span></h1>
+<p>Enterprise-grade infrastructure, delivered like a conversation — not a contract. We build for the businesses everyone else overlooks.</p>
+<div class="hero-cta">
+<button class="btn-primary">Book a free call</button>
+<button class="btn-ghost">See the work</button>
+</div>
+<div class="scroll-hint"> <span>Scroll</span> <div class="scroll-line"></div> </div>
+</section>
+<section class="card-section">
+<div class="flip-card" data-flip>
+<span class="tag">The thesis</span>
+<h2>Technology is for everyone.</h2>
+<p>Most Eastern Shore businesses have been told — directly or not — that real technology belongs to someone else. Bigger companies, bigger budgets, bigger cities. We exist to prove that's wrong, one build at a time.</p>
+</div>
+</section>
+<section class="card-section">
+<div class="flip-card" data-flip>
+<span class="tag">What we build</span>
+<h2>Web. Infrastructure. Movement.</h2>
+<p>Standard and premium web builds fund the work. Digital infrastructure for entertainment and hospitality businesses — distribution, booking, royalties, marketing — proves what's possible when one partner handles the whole stack.</p>
+</div>
+</section>
+<section class="card-section">
+<div class="flip-card neon" data-flip>
+<span class="tag">Proof, not pitch</span>
+<h2>The work is the argument.</h2>
+<p>Every site we ship, every system we build, is evidence. We don't explain the mission — we show up in rooms that don't expect us, and we belong there completely.</p>
+</div>
+</section>
+<section class="hero" style="min-height: 70vh;">
+<h1 style="font-size: clamp(28px, 5vw, 44px);">Let's build something <span class="accent">real.</span></h1>
+<p>No jargon. No overcomplication. Just a conversation about what your business actually needs.</p>
+<div class="hero-cta">
+<button class="btn-primary">Book a free call</button>
+</div>
+</section>
+</main>
+<footer> Denkore Group LLC · Eastern Shore, MD/DE · This is a concept prototype — production build uses Next.js </footer>
+<script>
+// Particle field — Canvas API, drifting + twinkling, fixed behind all scroll content
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let w, h;
+function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+const COUNT = 160;
+const particles = Array.from({ length: COUNT }, () => ({
+  x: Math.random() * w,
+  y: Math.random() * h,
+  r: Math.random() * 1.6 + 0.4,
+  alpha: Math.random() * 0.6 + 0.15,
+  twinkleSpeed: Math.random() * 0.015 + 0.005,
+  offset: Math.random() * Math.PI * 2,
+  driftX: (Math.random() - 0.5) * 0.12,
+  driftY: (Math.random() - 0.5) * 0.12,
+}));
+let t = 0;
+function draw() {
+  ctx.clearRect(0, 0, w, h);
+  t += 0.016;
+  for (const p of particles) {
+    const flicker = Math.sin(t * p.twinkleSpeed * 60 + p.offset) * 0.35 + 0.65;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(199,182,255,${p.alpha * flicker})`;
+    ctx.fill();
+    p.x += p.driftX;
+    p.y += p.driftY;
+    if (p.x < -2) p.x = w + 2;
+    if (p.x > w + 2) p.x = -2;
+    if (p.y < -2) p.y = h + 2;
+    if (p.y > h + 2) p.y = -2;
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+// Scroll-triggered card-flip reveal
+const cards = document.querySelectorAll('[data-flip]');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('in-view');
+  });
+}, { threshold: 0.3 });
+cards.forEach(c => io.observe(c));
+</script>
+</body>
+</html>

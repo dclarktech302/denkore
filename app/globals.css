@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050505;
+  --foreground: #ffffff;
+
+  --violet: #7c3aed;
+  --violet-light: #a78bfa;
+  --blue-light: #60a5fa;
+  --cyan: #0ea5e9;
+  --neon: #ff5fa8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-violet: var(--violet);
+  --color-violet-light: var(--violet-light);
+  --color-blue-light: var(--blue-light);
+  --color-cyan: var(--cyan);
+  --color-neon: var(--neon);
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@keyframes drift1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(40px, 30px) scale(1.1);
+  }
+}
+
+@keyframes drift2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-30px, -40px) scale(1.08);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-line {
+  0%,
+  100% {
+    transform: scaleY(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleY(0.6);
+    opacity: 1;
+  }
+}
+
+.animate-drift1 {
+  animation: drift1 14s ease-in-out infinite;
+}
+
+.animate-drift2 {
+  animation: drift2 17s ease-in-out infinite;
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fade-up 0.8s ease forwards;
+}
+
+.animate-pulse-line {
+  animation: pulse-line 1.8s ease-in-out infinite;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(90deg, var(--violet-light), var(--blue-light));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.tilt-card {
+  transform: perspective(1200px) rotateX(12deg) translateY(60px);
+  opacity: 0;
+  transition:
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.9s ease;
+}
+
+.tilt-card.in-view {
+  transform: perspective(1200px) rotateX(0deg) translateY(0);
+  opacity: 1;
+}
+
+.scroll-fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift1,
+  .animate-drift2,
+  .animate-fade-up,
+  .animate-pulse-line {
+    animation: none;
+    opacity: 1;
+  }
+
+  .tilt-card,
+  .scroll-fade-up {
+    transition: opacity 0.4s ease;
+    transform: none;
+  }
+
+  .tilt-card.in-view {
+    transform: none;
+  }
+}
