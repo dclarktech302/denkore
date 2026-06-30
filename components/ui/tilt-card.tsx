@@ -12,14 +12,34 @@ function useInView<T extends HTMLElement>(threshold = 0.3) {
     const el = ref.current;
     if (!el) return;
 
+    // The observer's first callback reports whatever the element's
+    // intersection state already is at observe()-time — it isn't
+    // necessarily the result of a user scroll. That happens whenever the
+    // page mounts with this element already on-screen (browser scroll
+    // restoration on reload, or loading directly at a section anchor).
+    // Treat that first report as a snapshot, not a scroll event: reveal
+    // instantly with no transition instead of running the tilt-rise
+    // animation for a scroll that never happened. Any later callback is a
+    // real crossing triggered by the user scrolling, so it animates as usual.
+    let isInitialReport = true;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            if (isInitialReport) {
+              el.style.transitionDuration = "0s";
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  el.style.transitionDuration = "";
+                });
+              });
+            }
             setInView(true);
             observer.unobserve(entry.target);
           }
         });
+        isInitialReport = false;
       },
       { threshold },
     );
