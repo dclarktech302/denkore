@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { render } from "@react-email/render";
 
 import { ContactEmail } from "@/components/emails/ContactEmail";
 import { contactFormSchema } from "@/lib/types";
@@ -32,12 +33,18 @@ export async function POST(request: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
+    // Rendered explicitly rather than passed via Resend's `react:` option:
+    // that option resolves @react-email/render with a runtime dynamic
+    // import, which doesn't survive Next's serverless bundling for a
+    // package nothing in first-party code otherwise imports.
+    const html = await render(ContactEmail({ name, email, helpType, message }));
+
     const { error } = await resend.emails.send({
       from: fromEmail,
       to: toEmail,
       replyTo: email,
       subject: `New inquiry from ${name} — Denkore Group`,
-      react: ContactEmail({ name, email, helpType, message }),
+      html,
     });
 
     if (error) {
