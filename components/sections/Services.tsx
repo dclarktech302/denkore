@@ -13,7 +13,11 @@ export function Services() {
       id="services"
       className="flex min-h-screen scroll-mt-24 flex-col items-center justify-center px-6 py-24"
     >
-      <SectionHeading eyebrow="What we do" title="Two ways we help." className="mb-16" />
+      <SectionHeading eyebrow="What we do" title="Two ways we help." className="mb-5" />
+      <p className="mb-16 max-w-[560px] text-center text-[15px] leading-[1.6] text-white/55">
+        However it starts, the relationship is the point: we stay with you
+        after the build, not just until the invoice.
+      </p>
 
       <div className="grid w-full max-w-5xl gap-6 md:grid-cols-2">
         <TiltCard className="flex flex-col">
