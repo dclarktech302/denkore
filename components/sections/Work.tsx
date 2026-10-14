@@ -4,22 +4,26 @@ import { WorkCard, type WorkCardProps } from "@/components/ui/work-card";
 const WORK_ITEMS: WorkCardProps[] = [
   {
     tag: "Web Development",
-    title: "Coastal refresh, Rehoboth Beach",
+    title: "GGR Music Group",
     description:
-      "A ground-up rebuild for a Rehoboth Beach venue — mobile-first, fast, and built to actually convert a Saturday night search into a customer through the door.",
-    status: "in-progress",
-  },
-  {
-    tag: "Web Development",
-    title: "Next build.",
-    description: "More work landing soon.",
-    status: "coming-soon",
+      "Site for an Eastern Shore music collective: show listings, email signup, and an image pipeline that keeps photo-heavy pages fast. Redesigned in October 2026.",
+    status: "live",
+    link: "https://ggrmusic.com",
   },
   {
     tag: "Digital Infrastructure",
-    title: "Next build.",
-    description: "More work landing soon.",
-    status: "coming-soon",
+    title: "Nightdeck",
+    description:
+      "A multi-tenant events platform for independent promoters: org-scoped data, PIN login, staff QR check-in and a public attendance survey.",
+    status: "live",
+    link: "https://nightdeck.live",
+  },
+  {
+    tag: "Web Development",
+    title: "StratAct Consulting & Research Group",
+    description:
+      "Redesign of the website for a consulting firm serving higher education institutions and nonprofits.",
+    status: "in-progress",
   },
 ];
 

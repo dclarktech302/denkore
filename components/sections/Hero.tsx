@@ -24,7 +24,7 @@ export function Hero() {
 
       <div className="animate-fade-up flex flex-wrap items-center justify-center gap-4 [animation-delay:0.7s]">
         <Button asChild variant="primary">
-          <a href="#contact">Book a free call</a>
+          <a href="#contact">Start a conversation</a>
         </Button>
         <Button asChild variant="ghost">
           <a href="#work">See the work</a>
