@@ -47,10 +47,7 @@ export function Footer() {
           <p className="mb-4 text-[11px] tracking-[0.2em] text-white/30 uppercase">
             Contact
           </p>
-          <p className="text-[13px] text-white/45">
-            hello@denkoregroup.com
-            <span className="ml-2 text-white/25">(pending Zoho setup)</span>
-          </p>
+          <p className="text-[13px] text-white/45">hello@denkoregroup.com</p>
 
           <p className="mt-6 mb-3 text-[11px] tracking-[0.2em] text-white/30 uppercase">
             Social
