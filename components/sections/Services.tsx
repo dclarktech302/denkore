@@ -26,7 +26,7 @@ export function Services() {
             depth, and a look your competitors don&apos;t have.
           </TiltCardBody>
           <Button asChild variant="ghost" className="mt-auto self-start">
-            <a href="#contact">See pricing</a>
+            <a href="#contact">Talk to us</a>
           </Button>
         </TiltCard>
 
